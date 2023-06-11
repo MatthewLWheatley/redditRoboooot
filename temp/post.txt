@@ -1,2 +1,0 @@
-Definition and Function (100 words):
-The Central Processing Unit, or CPU, is the primary component responsible for executing and coordinating instructions in a computer system. It is commonly referred to as the brain of the computer since it performs the majority of the data processing. The CPU acts as the intermediary between the hardware and software, receiving instructions from memory, executing them, and returning results. It performs arithmetic and logical operations, manages data flow, and controls the execution of various tasks within the computer.

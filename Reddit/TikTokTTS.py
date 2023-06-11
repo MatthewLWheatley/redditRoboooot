@@ -6,6 +6,7 @@ import re
 import argparse
 import textwrap
 import requests
+from pydub import AudioSegment
 
 # ╭─────────────────────────── Def Text to TikTok TTS ───────────────────────────╮ #
 def texttotiktoktts(text, voice="en_us_001", path="", num = 1):
@@ -71,27 +72,24 @@ def main():
 
     if file_path is not None:
         try:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                text = file.read()
+            with open(file_path, 'r') as file:
+                text = file.readlines()
         except FileNotFoundError:
             print('Error: The specified file could not be found.')
             return
-
-    # Split the text into chunks at full stops or line breaks
-    chunks = re.split(r'(?<=[.\n])\s+', text)
-    
-    count = 0
-    for i, chunk in enumerate(chunks, start=1):
-        # Wrap each chunk into sub-chunks of maximum 200 characters
-        sub_chunks = textwrap.wrap(chunk, width=200)
         
-        for j, sub_chunk in enumerate(sub_chunks, start=1):
-            count += 1
-            success, result = texttotiktoktts(sub_chunk, voice, path, num=count)
-            if success:
-                print(f'Success: Audio file {count} exported to {result}')
-            else:
-                print(f'Error: {result}')
+    count = 0
+    for line in text:
+        count += 1
+        texttotiktoktts(line, voice, path, num=count)
+ 
+
+    # Create a silent audio segment
+    silence = AudioSegment.silent(duration=1000)  # 1000 milliseconds = 1 second
+
+    count += 1
+    # Export the silent audio segment as an MP3 file
+    #silence.export("temp/temp"+str(count)+".mp3", format="mp3")
 
 if __name__ == '__main__':
     main()
